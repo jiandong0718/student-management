@@ -1,37 +1,36 @@
 # 🎓 Student Management System | 学生管理系统
 
 [![Java](https://img.shields.io/badge/Java-17+-orange.svg)](https://www.oracle.com/java/)
-[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen.svg)](https://spring.io/projects/spring-boot)
-[![Spring Cloud](https://img.shields.io/badge/Spring%20Cloud-2022.x-green.svg)](https://spring.io/projects/spring-cloud)
-[![MyBatis Plus](https://img.shields.io/badge/MyBatis%20Plus-3.x-red.svg)](https://baomidou.com/)
-[![Nacos](https://img.shields.io/badge/Nacos-2.x-blue.svg)](https://nacos.io/)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.5-brightgreen.svg)](https://spring.io/projects/spring-boot)
+[![Spring Cloud](https://img.shields.io/badge/Spring%20Cloud-2023.0.1-green.svg)](https://spring.io/projects/spring-cloud)
+[![MyBatis Plus](https://img.shields.io/badge/MyBatis%20Plus-3.5.6-red.svg)](https://baomidou.com/)
+[![MySQL](https://img.shields.io/badge/MySQL-8.0+-blue.svg)](https://www.mysql.com/)
+[![Redis](https://img.shields.io/badge/Redis-7.0+-red.svg)](https://redis.io/)
 [![Kafka](https://img.shields.io/badge/Kafka-3.x-yellow.svg)](https://kafka.apache.org/)
-[![XXL-Job](https://img.shields.io/badge/XXL--Job-2.x-purple.svg)](https://github.com/xuxueli/xxl-job)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-> 🚀 基于Java+Spring Boot+Spring Cloud+MyBatis构建的教育机构B端管理后台系统，集成Nacos、Kafka、XXL-Job等主流中间件，专为中小型教育机构设计，提供完整的学生管理、教学管理、财务管理等功能。
+> 🚀 基于Spring Boot 3.x + Spring Cloud 2023.x构建的多模块微服务学生管理系统，采用领域驱动设计（DDD），集成Redis、Kafka等主流中间件，专为教育机构设计的现代化管理平台。
 
 ## 📋 项目简介
 
-本项目是一个全面的教育机构管理后台系统，采用Spring Cloud微服务架构和现代化的技术栈，集成Nacos、Kafka、XXL-Job等主流中间件，旨在帮助教育机构提升管理效率、优化教学质量并提供数据支持决策。
+本项目是一个现代化的教育机构管理系统，采用**多模块Maven项目架构**，基于Spring Boot 3.x和Spring Cloud 2023.x技术栈构建。系统采用领域驱动设计（DDD）思想，实现了学生服务和教师服务的独立部署，为教育机构提供高效、稳定、可扩展的管理解决方案。
 
 ### 🎯 核心特性
 
-- **🔐 权限管理**：细粒度的角色权限控制，多层级管理架构
-- **👨‍🎓 学生管理**：完整的学生档案管理，从招生到毕业全流程跟踪
-- **👨‍🏫 教师管理**：教师档案、绩效评估、薪资管理一体化
-- **📚 课程管理**：课程库管理、教学资源整合、课程评价体系
-- **🏫 班级管理**：智能分班、班级动态监控、学习氛围分析
-- **📅 排课系统**：可视化排课、冲突检测、资源优化分配
+- **🏗️ 多模块架构**：Maven多模块项目，支持独立开发、测试、部署
+- **⚡ 微服务设计**：服务间松耦合，支持水平扩展
+- **🔐 多环境配置**：dev/test/prod环境配置分离，灵活部署
+- **👨‍🎓 学生管理**：完整的学生档案管理和学习跟踪
+- **👨‍🏫 教师管理**：教师档案、绩效评估、薪资管理
+- **📚 课程管理**：课程库管理、教学资源整合
+- **🏫 班级管理**：智能分班、班级动态监控
 - **📊 数据分析**：多维度运营数据分析，智能决策支持
-- **💰 财务管理**：收费管理、退费处理、财务报表自动化
-- **📱 移动端**：响应式设计，支持移动办公
-- **🌐 微服务架构**：Spring Cloud生态，服务治理完善
-- **⚡ 高性能缓存**：Redis+Caffeine双级缓存，响应速度快
-- **🔄 异步处理**：Kafka消息队列，系统解耦高效
-- **⏰ 任务调度**：XXL-Job分布式任务调度，定时任务可视化管理
+- **⚡ 高性能缓存**：Redis双客户端支持（Jedis + Redisson）
+- **🔄 异步处理**：Kafka消息队列，系统解耦
+- **📱 API文档**：集成Swagger，完整的API文档
+- **🛡️ 服务治理**：预留Nacos配置，支持服务注册发现
 
-## 🏗️ 技术架构
+## 🏗️ 系统架构
 
 ### 技术栈
 
@@ -54,34 +53,26 @@
 | **构建工具** | Maven | 3.8+ | 项目构建 |
 | **Java版本** | JDK | 17+ | 运行环境 |
 
-### 架构设计
-
-采用"**核心单体+周边微服务**"的混合架构模式，集成Spring Cloud生态：
+### 项目架构
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                     API Gateway                            │
+│                    Gateway (预留)                           │
 ├─────────────────────────────────────────────────────────────┤
-│  Core Service (核心单体应用)                                │
-│  ├─ User & Auth Module      ├─ Teaching Module             │
-│  ├─ Operation Module        ├─ Finance Module              │
+│  Student Service (8081)     │  Teacher Service (8082)       │
+│  ├─ REST API               │  ├─ REST API                  │
+│  ├─ Business Logic         │  ├─ Business Logic            │
+│  ├─ Data Access           │  ├─ Data Access               │
+│  └─ MySQL Database         │  └─ MySQL Database            │
 ├─────────────────────────────────────────────────────────────┤
-│  Microservices (独立微服务)                                 │
-│  ├─ Analytics Service       ├─ Notification Service        │
-│  ├─ Marketing Service       ├─ File Storage Service        │
+│  Common Module (共享基础设施)                                │
+│  ├─ Base Entities          ├─ API Response封装             │
+│  ├─ Redis配置              ├─ Kafka配置                   │
+│  ├─ Exception处理          ├─ 工具类                      │
 ├─────────────────────────────────────────────────────────────┤
-│  Middle-ware (中间件层)                                     │
-│  ├─ Nacos (注册中心)        ├─ Nacos (配置中心)             │
-│  ├─ Kafka (消息队列)        ├─ XXL-Job (任务调度)           │
-│  ├─ OpenFeign (服务调用)    ├─ Caffeine (本地缓存)         │
-├─────────────────────────────────────────────────────────────┤
-│  Data Layer (数据层)                                        │
-│  ├─ MySQL (关系型数据库)    ├─ MongoDB (文档数据库)         │
-│  ├─ Redis (分布式缓存)      ├─ 数据持久化                  │
-├─────────────────────────────────────────────────────────────┤
-│  Infrastructure (基础设施)                                  │
-│  ├─ Monitoring Service      ├─ Log Service                 │
-│  ├─ Health Check           ├─ Security Service            │
+│  Infrastructure (基础设施)                                   │
+│  ├─ Redis (缓存)           ├─ Kafka (消息队列)             │
+│  ├─ MySQL (数据库)         ├─ Nacos (服务治理-预留)        │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -92,11 +83,8 @@
 - **JDK 17+**
 - **Maven 3.8+** 
 - **MySQL 8.0+**
-- **MongoDB 6.0+**
-- **Redis 7.0+**
-- **Nacos 2.x**
-- **Kafka 3.x**
-- **XXL-Job 2.x**
+- **Redis 7.0+** (必需)
+- **Kafka 3.x** (可选)
 
 ### 安装与运行
 
@@ -107,238 +95,314 @@
    ```
 
 2. **数据库配置**
-   ```bash
+   ```sql
    # 创建数据库
-   mysql -u root -p
-   CREATE DATABASE student_management CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+   CREATE DATABASE student CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+   CREATE DATABASE teacher CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+   
+   # 可选：创建测试和生产环境数据库
+   CREATE DATABASE student_db_test CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+   CREATE DATABASE teacher_db_test CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+   CREATE DATABASE student_db_prod CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+   CREATE DATABASE teacher_db_prod CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
    ```
 
-3. **中间件环境准备**
+3. **修改配置文件**
    ```bash
-   # 启动Nacos (注册中心 + 配置中心)
-   sh startup.sh -m standalone
+   # 修改开发环境配置
+   vim student-service/src/main/resources/application-dev.yml
+   vim teacher-service/src/main/resources/application-dev.yml
    
-   # 启动Kafka
-   bin/kafka-server-start.sh config/server.properties
-   
-   # 启动XXL-Job调度中心
-   # 参考XXL-Job官方文档部署调度中心
-   ```
-
-4. **修改配置**
-   ```yaml
-   # src/main/resources/application-dev.yml
+   # 更新数据库密码
    spring:
      datasource:
-       url: jdbc:mysql://localhost:3306/student_management
-       username: your_username
-       password: your_password
-     data:
-       mongodb:
-         uri: mongodb://localhost:27017/student_management
-     cloud:
-       nacos:
-         discovery:
-           server-addr: localhost:8848
-         config:
-           server-addr: localhost:8848
-     kafka:
-       bootstrap-servers: localhost:9092
-       consumer:
-         group-id: student-management-group
-   
-   # XXL-Job配置
-   xxl:
-     job:
-       admin:
-         addresses: http://localhost:8080/xxl-job-admin
-       executor:
-         appname: student-management-executor
-         address: 
-         ip: 
-         port: 9999
+       password: your_mysql_password
    ```
 
-5. **运行应用**
+4. **启动基础服务**
    ```bash
-   # 开发环境
-   mvn spring-boot:run -Dspring-boot.run.profiles=dev
+   # 启动Redis (必需)
+   redis-server
    
-   # 或使用Maven Wrapper
-   ./mvnw spring-boot:run -Dspring-boot.run.profiles=dev
+   # 启动Kafka (可选)
+   bin/kafka-server-start.sh config/server.properties
    ```
 
-6. **访问应用**
-   - 应用地址：http://localhost:8080
-   - API文档：http://localhost:8080/swagger-ui.html
-   - Nacos控制台：http://localhost:8848/nacos
-   - XXL-Job控制台：http://localhost:8080/xxl-job-admin
-   - 默认管理员：admin/admin123
+5. **编译和运行**
+   ```bash
+   # 方式1：使用脚本（推荐）
+   ./build.sh        # 编译项目
+   ./run-services.sh # 启动所有服务
+   
+   # 方式2：手动编译运行
+   ./mvnw clean install -DskipTests
+   java -jar student-service/target/student-service-1.0.0.jar &
+   java -jar teacher-service/target/teacher-service-1.0.0.jar &
+   
+   # 方式3：使用Maven插件
+   cd student-service && ../mvnw spring-boot:run &
+   cd teacher-service && ../mvnw spring-boot:run &
+   ```
+
+6. **验证服务**
+   ```bash
+   # 检查服务状态
+   curl http://localhost:8081/actuator/health
+   curl http://localhost:8082/actuator/health
+   
+   # 查看服务信息
+   curl http://localhost:8081/actuator/info
+   curl http://localhost:8082/actuator/info
+   ```
 
 ## 📦 项目结构
 
 ```
 student-management/
-├── common-lib/                 # 公共库
-│   ├── config/                # 配置类
-│   ├── controller/            # 基础控制器
-│   ├── exception/             # 异常处理
-│   ├── model/                 # 基础模型
-│   ├── response/              # 响应封装
-│   └── util/                  # 工具类
-├── src/main/java/com/example/studentManagement/
-│   ├── config/                # 配置类
-│   │   ├── NacosConfig.java   # Nacos配置
-│   │   ├── KafkaConfig.java   # Kafka配置
-│   │   ├── CacheConfig.java   # 缓存配置
-│   │   └── XxlJobConfig.java  # XXL-Job配置
-│   ├── controller/            # 控制器层
-│   ├── dto/                   # 数据传输对象
-│   ├── entity/                # 实体类
-│   ├── mapper/                # 数据访问层
-│   ├── service/               # 业务逻辑层
-│   ├── security/              # 安全配置
-│   ├── task/                  # 定时任务
-│   ├── message/               # 消息处理
-│   └── feign/                 # 服务调用接口
-├── src/main/resources/
-│   ├── application*.yml       # 配置文件
-│   ├── bootstrap.yml          # Nacos启动配置
-│   ├── kafka/                 # Kafka配置
-│   └── static/                # 静态资源
-└── src/test/                  # 测试代码
+├── pom.xml                           # 父POM聚合器
+├── build.sh                          # 编译脚本
+├── run-services.sh                   # 启动脚本
+├── common/                           # 通用模块
+│   ├── pom.xml
+│   └── src/main/java/com/example/common/
+│       ├── config/
+│       │   ├── KafkaConfig.java     # Kafka配置
+│       │   └── RedisConfig.java     # Redis配置（Jedis+Redisson）
+│       ├── event/                   # 领域事件
+│       │   ├── DomainEvent.java
+│       │   └── DomainEventPublisher.java
+│       ├── model/                   # 基础模型
+│       │   ├── BaseEntity.java
+│       │   └── AggregateRoot.java
+│       ├── response/                # 响应封装
+│       │   ├── ApiResponse.java
+│       │   └── ResultCode.java
+│       └── util/                    # 工具类
+├── student-service/                 # 学生服务模块 (端口8081)
+│   ├── pom.xml
+│   ├── src/main/java/com/example/student/
+│   │   ├── entity/                  # 学生实体
+│   │   ├── mapper/                  # 数据访问层
+│   │   ├── service/                 # 业务逻辑层
+│   │   ├── controller/              # 控制器层
+│   │   └── StudentServiceApplication.java
+│   └── src/main/resources/
+│       ├── application.yml          # 主配置
+│       ├── application-dev.yml      # 开发环境配置
+│       ├── application-test.yml     # 测试环境配置
+│       └── application-prod.yml     # 生产环境配置
+├── teacher-service/                 # 教师服务模块 (端口8082)
+│   ├── pom.xml
+│   ├── src/main/java/com/example/teacher/
+│   │   ├── entity/                  # 教师实体
+│   │   ├── mapper/                  # 数据访问层
+│   │   ├── service/                 # 业务逻辑层
+│   │   ├── controller/              # 控制器层
+│   │   └── TeacherServiceApplication.java
+│   └── src/main/resources/
+│       ├── application.yml          # 主配置
+│       ├── application-dev.yml      # 开发环境配置
+│       ├── application-test.yml     # 测试环境配置
+│       └── application-prod.yml     # 生产环境配置
+└── docs/                            # 项目文档
+    ├── ARCHITECTURE_REFACTOR_GUIDE.md
+    ├── MIGRATION_GUIDE.md
+    └── HELP.md
 ```
 
 ## 🔧 功能模块
 
-### 核心功能
+### 学生服务 (Student Service)
+- **端口**：8081
+- **数据库**：student / student_db_dev / student_db_test / student_db_prod
+- **Redis数据库**：0
+- **Kafka消费组**：student-service-{env}-group
+- **功能**：
+  - 学生档案管理
+  - 学习记录跟踪
+  - 成绩管理
+  - 考勤统计
 
-| 模块 | 功能描述 | 状态 |
-|------|----------|------|
-| **用户权限管理** | 多角色权限控制、登录安全 | ✅ |
-| **学生管理** | 学生档案、招生管理、学习跟踪 | ✅ |
-| **教师管理** | 教师档案、绩效评估、薪资管理 | ✅ |
-| **课程管理** | 课程库、定价策略、教学资源 | ✅ |
-| **班级管理** | 智能分班、班级动态监控 | ✅ |
-| **排课系统** | 可视化排课、冲突检测 | 🚧 |
-| **考勤管理** | 考勤统计、异常提醒 | 🚧 |
-| **成绩管理** | 成绩录入、分析报表 | 🚧 |
-| **财务管理** | 收费管理、财务报表 | 🚧 |
-| **数据分析** | 运营看板、多维度分析 | 📋 |
+### 教师服务 (Teacher Service)
+- **端口**：8082
+- **数据库**：teacher / teacher_db_dev / teacher_db_test / teacher_db_prod
+- **Redis数据库**：1
+- **Kafka消费组**：teacher-service-{env}-group
+- **功能**：
+  - 教师档案管理
+  - 课程安排
+  - 绩效评估
+  - 薪资管理
 
-> 状态说明：✅ 已完成 | 🚧 开发中 | 📋 计划中
+### 通用模块 (Common Module)
+- **Redis配置**：支持Jedis + Redisson双客户端
+- **Kafka配置**：统一的消息队列配置
+- **基础实体**：BaseEntity、AggregateRoot
+- **响应封装**：统一的API响应格式
+- **工具类**：通用工具和业务逻辑
 
-### 高级功能
+## 🌐 访问地址
 
-- **📊 数据分析**：运营数据看板、学生分析、教学质量评估
-- **📱 消息通知**：站内消息、短信、邮件、家校沟通
-- **🎯 营销工具**：活动管理、优惠券、推荐奖励
-- **🏢 多校区支持**：资源共享、数据汇总、对比分析
-- **📱 移动端**：响应式设计、移动办公支持
-- **🔧 服务治理**：Nacos服务注册发现、配置中心统一管理
-- **⚡ 性能优化**：多级缓存策略、异步消息处理、任务调度优化
-- **📈 可扩展性**：微服务架构、水平扩展、弹性伸缩
-- **🛡️ 高可用性**：服务熔断、降级、限流、监控告警
+### 开发环境
+- **学生服务**：http://localhost:8081
+- **教师服务**：http://localhost:8082
+- **学生服务API文档**：http://localhost:8081/swagger-ui.html
+- **教师服务API文档**：http://localhost:8082/swagger-ui.html
+- **学生服务健康检查**：http://localhost:8081/actuator/health
+- **教师服务健康检查**：http://localhost:8082/actuator/health
+
+### 服务监控
+- **学生服务指标**：http://localhost:8081/actuator/metrics
+- **教师服务指标**：http://localhost:8082/actuator/metrics
+- **学生服务信息**：http://localhost:8081/actuator/info
+- **教师服务信息**：http://localhost:8082/actuator/info
+
+## ⚙️ 环境配置
+
+### 开发环境 (dev)
+```yaml
+spring:
+  profiles:
+    active: dev
+  datasource:
+    url: jdbc:mysql://localhost:3306/student?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: your_password
+  jpa:
+    hibernate:
+      ddl-auto: create-drop  # 每次启动重建表
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      database: 0  # student服务使用0，teacher服务使用1
+```
+
+### 测试环境 (test)
+```yaml
+spring:
+  profiles:
+    active: test
+  datasource:
+    url: jdbc:mysql://test-mysql:3306/student_db_test
+    username: test_user
+    password: test_password
+  jpa:
+    hibernate:
+      ddl-auto: update  # 更新表结构
+```
+
+### 生产环境 (prod)
+```yaml
+spring:
+  profiles:
+    active: prod
+  datasource:
+    url: jdbc:mysql://prod-mysql:3306/student_db_prod?useSSL=true
+    username: ${DB_USERNAME:prod_user}
+    password: ${DB_PASSWORD:prod_password}
+  jpa:
+    hibernate:
+      ddl-auto: validate  # 只验证表结构
+```
 
 ## 🛠️ 开发指南
 
-### 代码规范
-
-- **命名约定**：遵循Java驼峰命名规范
-- **代码风格**：基于Google Java Style Guide
-- **注释规范**：使用JavaDoc标准
-- **Git提交**：采用Conventional Commits规范
-
-### 开发环境配置
-
+### 编译命令
 ```bash
-# 安装依赖
-mvn clean install
+# 编译整个项目
+./mvnw clean install
 
-# 运行测试
-mvn test
+# 编译并跳过测试
+./mvnw clean install -DskipTests
 
-# 代码格式化
-mvn spring-javaformat:apply
-
-# 生成API文档
-mvn springdoc-openapi:generate
-
-# 本地开发环境启动中间件 (Docker Compose)
-docker-compose up -d nacos mysql redis mongodb kafka xxljob
-
-# 检查服务状态
-docker-compose ps
-
-# 停止服务
-docker-compose down
+# 编译特定模块
+./mvnw clean install -pl student-service -am
+./mvnw clean install -pl teacher-service -am
 ```
+
+### 运行命令
+```bash
+# 指定环境运行
+java -jar student-service/target/student-service-1.0.0.jar --spring.profiles.active=test
+java -jar teacher-service/target/teacher-service-1.0.0.jar --spring.profiles.active=prod
+
+# 使用Maven插件运行
+cd student-service && ../mvnw spring-boot:run -Dspring-boot.run.profiles=test
+cd teacher-service && ../mvnw spring-boot:run -Dspring-boot.run.profiles=prod
+```
+
+### 代码规范
+- **命名约定**：Java驼峰命名规范
+- **包结构**：按照功能模块组织代码
+- **注释规范**：使用JavaDoc标准
+- **配置管理**：环境配置分离
 
 ## 📊 API文档
 
-项目集成了Springdoc OpenAPI，提供完整的API文档：
+系统集成了Springdoc OpenAPI，提供完整的API文档：
 
-- **Swagger UI**：http://localhost:8080/swagger-ui.html
-- **OpenAPI JSON**：http://localhost:8080/v3/api-docs
+- **学生服务API**：http://localhost:8081/swagger-ui.html
+- **教师服务API**：http://localhost:8082/swagger-ui.html
+- **OpenAPI JSON**：
+  - 学生服务：http://localhost:8081/v3/api-docs
+  - 教师服务：http://localhost:8082/v3/api-docs
 
 ## 🧪 测试
 
 ```bash
 # 运行所有测试
-mvn test
+./mvnw test
 
-# 运行集成测试
-mvn test -Dtest=**/*IntegrationTest
+# 运行特定模块测试
+./mvnw test -pl student-service
+./mvnw test -pl teacher-service
 
-# 生成测试报告
-mvn jacoco:report
+# 跳过测试编译
+./mvnw clean install -DskipTests
 ```
 
 ## 🚀 部署
 
-### Docker部署
-
+### 生产环境部署
 ```bash
-# 使用Docker Compose一键部署
-docker-compose -f docker-compose.prod.yml up -d
+# 1. 编译生产版本
+./mvnw clean package -Pprod
 
-# 或分步部署
-# 1. 构建应用镜像
-docker build -t student-management .
+# 2. 设置环境变量
+export DB_USERNAME=prod_user
+export DB_PASSWORD=prod_password
+export REDIS_HOST=prod-redis
+export REDIS_PASSWORD=prod_redis_password
+export KAFKA_SERVERS=prod-kafka:9092
 
-# 2. 启动基础中间件
-docker-compose up -d nacos mysql redis mongodb kafka xxljob
-
-# 3. 运行应用容器
-docker run -p 8080:8080 \
-  --link nacos:nacos \
-  --link mysql:mysql \
-  --link redis:redis \
-  --link mongodb:mongodb \
-  --link kafka:kafka \
-  student-management
+# 3. 启动服务
+java -jar student-service/target/student-service-1.0.0.jar --spring.profiles.active=prod
+java -jar teacher-service/target/teacher-service-1.0.0.jar --spring.profiles.active=prod
 ```
 
-### 传统部署
-
+### Docker部署 (可选)
 ```bash
-# 打包
-mvn clean package -Pproduction
+# 构建镜像
+docker build -t student-service:1.0.0 student-service/
+docker build -t teacher-service:1.0.0 teacher-service/
 
-# 运行
-java -jar target/student-management-*.jar --spring.profiles.active=prod
+# 运行容器
+docker run -p 8081:8081 -e SPRING_PROFILES_ACTIVE=prod student-service:1.0.0
+docker run -p 8082:8082 -e SPRING_PROFILES_ACTIVE=prod teacher-service:1.0.0
 ```
+
+## 🔮 未来规划
+
+- **🌐 API网关**：Spring Cloud Gateway集成
+- **🔐 认证授权**：Spring Security + JWT
+- **📊 监控告警**：Spring Boot Admin + Micrometer
+- **🗂️ 配置中心**：启用Nacos配置管理
+- **🔍 链路追踪**：Spring Cloud Sleuth + Zipkin
+- **📱 移动端**：React Native移动应用
+- **🤖 智能分析**：AI驱动的数据分析
 
 ## 🤝 贡献指南
-
-我们欢迎所有形式的贡献，包括但不限于：
-
-1. **🐛 Bug报告**：发现问题请提交Issue
-2. **✨ 功能建议**：欢迎提出新功能想法
-3. **📝 文档改进**：帮助改进项目文档
-4. **💻 代码贡献**：提交Pull Request
-
-### 贡献流程
 
 1. Fork项目
 2. 创建功能分支 (`git checkout -b feature/AmazingFeature`)
@@ -349,10 +413,6 @@ java -jar target/student-management-*.jar --spring.profiles.active=prod
 ## 📄 许可证
 
 本项目采用MIT许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
-
-## 🙏 致谢
-
-感谢所有为本项目做出贡献的开发者！
 
 ## 📞 联系我们
 
