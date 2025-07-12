@@ -356,9 +356,9 @@ java -jar target/student-management-*.jar --spring.profiles.active=prod
 
 ## 📞 联系我们
 
-- **项目主页**：https://github.com/your-username/student-management
-- **问题反馈**：https://github.com/your-username/student-management/issues
-- **邮箱**：your-email@example.com
+- **项目主页**：https://github.com/jiandong0718/student-management
+- **问题反馈**：https://github.com/jiandong0718/student-management/issues
+- **邮箱**：jiandong.yh@gmail.com
 
 ---
 
